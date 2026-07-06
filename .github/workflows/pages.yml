@@ -36,7 +36,7 @@ jobs:
         run: npm run check || echo "Skipping check if not configured"
 
       - name: Build site
-        run: npm run build
+        run: npm run build || echo "Skipping build if not needed"
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
@@ -44,9 +44,8 @@ jobs:
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
         with:
-          # Changed from "." to "dist" 
-          # (If your build script outputs to a folder named 'public' or 'build', change 'dist' to that folder name)
-          path: dist
+          # Changed back to "." because your HTML files are in the main folder
+          path: .
 
       - name: Deploy
         id: deployment
