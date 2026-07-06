@@ -1,5 +1,46 @@
 document.documentElement.classList.add('js-ready');
 
+const siteHeader = document.querySelector('.site-header');
+const menuToggleEl = document.querySelector('.menu-toggle');
+if (siteHeader && menuToggleEl) {
+  const shareButton = document.createElement('button');
+  shareButton.type = 'button';
+  shareButton.className = 'share-button';
+  shareButton.setAttribute('aria-label', 'Share this page');
+  shareButton.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.6" y1="10.5" x2="15.4" y2="6.5"></line><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"></line></svg>';
+  siteHeader.insertBefore(shareButton, menuToggleEl);
+
+  const closeShareMenu = () => document.querySelector('.share-menu')?.remove();
+
+  shareButton.addEventListener('click', async () => {
+    const shareData = { title: document.title, text: 'Khairpur Date Palm & Nursery', url: location.href };
+    if (navigator.share) {
+      try { await navigator.share(shareData); } catch { /* user cancelled */ }
+      return;
+    }
+    if (document.querySelector('.share-menu')) { closeShareMenu(); return; }
+    const menu = document.createElement('div');
+    menu.className = 'share-menu';
+    menu.innerHTML = `
+      <a href="https://wa.me/?text=${encodeURIComponent(`${shareData.text} ${shareData.url}`)}" target="_blank" rel="noopener">WhatsApp par bhejein</a>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareData.url)}" target="_blank" rel="noopener">Facebook par share karein</a>
+      <button type="button" data-copy>Link copy karein</button>
+    `;
+    siteHeader.appendChild(menu);
+    menu.querySelector('[data-copy]').addEventListener('click', async () => {
+      await navigator.clipboard.writeText(shareData.url);
+      menu.querySelector('[data-copy]').textContent = 'Copy ho gaya ✓';
+      setTimeout(closeShareMenu, 1200);
+    });
+    setTimeout(() => document.addEventListener('click', function onDocClick(event) {
+      if (!menu.contains(event.target) && event.target !== shareButton) {
+        closeShareMenu();
+        document.removeEventListener('click', onDocClick);
+      }
+    }), 0);
+  });
+}
+
 const menuButton = document.querySelector('.menu-toggle');
 const nav = document.querySelector('#nav');
 menuButton.addEventListener('click', () => {

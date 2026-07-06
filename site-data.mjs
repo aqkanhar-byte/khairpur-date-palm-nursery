@@ -15,6 +15,15 @@ export const pages = [
     intro: 'Date palms are long-term assets. We help buyers compare purpose, height, logistics and installation requirements before selecting stock.',
     cta: 'Check palm availability', purpose: 'Date palm availability', image: 'assets/khairpur-date-palm-hero.webp', imageAlt: 'Date palm orchard in the warm light of Khairpur',
     facts: [['Aseel', 'Available from approximately 1–20 ft'], ['Qarbala', 'Available from approximately 1–10 ft'], ['Service', 'Supply and installation'], ['Origin', 'Khairpur Mirs, Sindh']],
+    pricing: [
+      ['Nursery Plant', '1.5–2 ft', 'PKR 2,000'],
+      ['Date Palm', '5–6 ft', 'PKR 5,000'],
+      ['Date Palm', '8–10 ft', 'PKR 6,000'],
+      ['Date Palm', '10–12 ft', 'PKR 6,500'],
+      ['Date Palm', '12–14 ft', 'PKR 7,000'],
+      ['Date Palm', '14–16 ft', 'PKR 7,500'],
+      ['Big Root Date Palm', '5–18 ft', 'PKR 10,000–12,000'],
+    ],
     sections: [
       ['Aseel Date Palm', 'Khairpur’s best-known commercial date variety and a strong choice for orchard and landscape enquiries. Availability changes by height and season.', ['Multiple height bands', 'Farm and farmhouse use', 'Installation enquiry available']],
       ['Qarbala Date Palm', 'A regional date-palm option available in several young-to-established sizes. Exact stock and specification are confirmed before quotation.', ['Approximately 1–10 ft', 'Garden and farm enquiries', 'Direct nursery confirmation']],
