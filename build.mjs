@@ -1,21 +1,73 @@
-import { writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, rmSync, writeFileSync, copyFileSync, cpSync } from 'node:fs';
+import { join } from 'node:path';
 import { business, pages } from './site-data.mjs';
 
 const SITE_URL = 'https://khairpurdatepalms.com';
+const OUT_DIR = 'dist';
 
-const esc = (value) => String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
+if (existsSync(OUT_DIR)) {
+  rmSync(OUT_DIR, { recursive: true, force: true });
+}
+
+mkdirSync(OUT_DIR, { recursive: true });
+
+const copyIfExists = (src, dest = src) => {
+  if (!existsSync(src)) return;
+  const target = join(OUT_DIR, dest);
+  if (src.includes('.') && !src.endsWith('/')) {
+    mkdirSync(target.split('/').slice(0, -1).join('/'), { recursive: true });
+    copyFileSync(src, target);
+  } else {
+    cpSync(src, target, { recursive: true });
+  }
+};
+
+copyIfExists('assets');
+copyIfExists('styles.css');
+copyIfExists('refined.css');
+copyIfExists('script.js');
+copyIfExists('assistant.js');
+copyIfExists('site.webmanifest');
+copyIfExists('robots.txt');
+copyIfExists('sitemap.xml');
+
+const esc = (value) =>
+  String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;');
 
 function navigation(page) {
-  const groups = { palms: ['date-palms', 'aseel-date-palm', 'qarbala-date-palm'], products: ['date-products', 'wholesale-export'], services: ['palm-installation', 'palm-supply-delivery'] };
-  const current = (key) => (groups[key] || [key]).includes(page.slug) ? ' aria-current="page"' : '';
+  const groups = {
+    palms: ['date-palms', 'aseel-date-palm', 'qarbala-date-palm'],
+    products: ['date-products', 'wholesale-export'],
+    services: ['palm-installation', 'palm-supply-delivery'],
+  };
+
+  const current = (key) =>
+    (groups[key] || [key]).includes(page.slug) ? ' aria-current="page"' : '';
+
   return `<a href="index.html">Home</a><a href="date-palms.html"${current('palms')}>Date Palms</a><a href="date-products.html"${current('products')}>Date Products</a><a href="palm-installation.html"${current('services')}>Services</a><a href="projects.html"${current('projects')}>Projects</a><a href="index.html#gallery">Pictures & Videos</a><a href="about.html"${current('about')}>About</a>`;
 }
 
 function schema(page) {
   return JSON.stringify({
-    '@context': 'https://schema.org', '@type': 'WebPage', name: page.title,
-    description: page.description, isPartOf: { '@type': 'WebSite', name: business.name },
-    about: { '@type': 'LocalBusiness', name: business.name, telephone: `+${business.phoneIntl}`, email: business.email, areaServed: 'Pakistan' },
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: page.title,
+    description: page.description,
+    isPartOf: {
+      '@type': 'WebSite',
+      name: business.name,
+    },
+    about: {
+      '@type': 'LocalBusiness',
+      name: business.name,
+      telephone: `+${business.phoneIntl}`,
+      email: business.email,
+      areaServed: 'Pakistan',
+    },
   }).replaceAll('<', '\\u003c');
 }
 
@@ -24,10 +76,23 @@ function section([title, copy, bullets], index) {
 }
 
 function pageTemplate(page) {
-  const whatsapp = `https://wa.me/${business.phoneIntl}?text=${encodeURIComponent(`Assalam-o-Alaikum, mujhe ${page.purpose} ke bare mein maloomat chahiye.\n\nCity: \nQuantity: \nRequired date/height: `)}`;
+  const whatsapp = `https://wa.me/${business.phoneIntl}?text=${encodeURIComponent(
+    `Assalam-o-Alaikum, mujhe ${page.purpose} ke bare mein maloomat chahiye.\n\nCity: \nQuantity: \nRequired date/height: `
+  )}`;
+
   const mediaClass = page.imageAuthentic ? ' verified-media' : ' editorial-media';
+
   const heroMedia = `<div class="subhero-media${mediaClass}"><img src="${page.image}" alt="${esc(page.imageAlt)}" width="1600" height="1000"></div>`;
-  const gallery = page.gallery ? `<section class="evidence-gallery section"><div class="container"><div class="gallery-heading"><div><p class="eyebrow"><span></span>Authentic Facebook archive</p><h2>Field, harvest and<br><em>product activity.</em></h2></div><p>Every image below comes from the company’s public media. The large installation image is project evidence; smaller images document seasonal business activity and product communication.</p></div><div class="media-gallery-grid">${page.gallery.map(([src,title,copy,width,height],index)=>`<figure class="gallery-item${index===0?' gallery-feature':''}"><img src="${src}" alt="${esc(title)}" width="${width}" height="${height}" loading="lazy"><figcaption><strong>${esc(title)}</strong><span>${esc(copy)}</span></figcaption></figure>`).join('')}</div></div></section>` : '';
+
+  const gallery = page.gallery
+    ? `<section class="evidence-gallery section"><div class="container"><div class="gallery-heading"><div><p class="eyebrow"><span></span>Authentic Facebook archive</p><h2>Field, harvest and<br><em>product activity.</em></h2></div><p>Every image below comes from the company’s public media. The large installation image is project evidence; smaller images document seasonal business activity and product communication.</p></div><div class="media-gallery-grid">${page.gallery
+        .map(
+          ([src, title, copy, width, height], index) =>
+            `<figure class="gallery-item${index === 0 ? ' gallery-feature' : ''}"><img src="${src}" alt="${esc(title)}" width="${width}" height="${height}" loading="lazy"><figcaption><strong>${esc(title)}</strong><span>${esc(copy)}</span></figcaption></figure>`
+        )
+        .join('')}</div></div></section>`
+    : '';
+
   return `<!doctype html>
 <html lang="en"><head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -51,5 +116,8 @@ function pageTemplate(page) {
 <a class="floating-wa" href="${whatsapp}" target="_blank" rel="noopener" aria-label="Start WhatsApp enquiry">◉ <span>WhatsApp enquiry</span></a><nav class="mobile-conversion" aria-label="Quick contact"><a href="tel:+${business.phoneIntl}"><span>Call us</span><strong>${business.phone}</strong></a><a href="${whatsapp}" target="_blank" rel="noopener"><span>WhatsApp</span><strong>Start enquiry</strong></a></nav><script src="script.js"></script><script src="assistant.js"></script></body></html>`;
 }
 
-for (const page of pages) writeFileSync(`${page.slug}.html`, pageTemplate(page), 'utf8');
-console.log(`Built ${pages.length} content pages.`);
+for (const page of pages) {
+  writeFileSync(join(OUT_DIR, `${page.slug}.html`), pageTemplate(page), 'utf8');
+}
+
+console.log(`Built ${pages.length} content pages into ${OUT_DIR}/`);
