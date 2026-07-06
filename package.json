@@ -1,0 +1,9 @@
+{
+  "name": "khairpur-date-palm-nursery",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "check": "node --check script.js && node --check build.mjs && node audit.mjs"
+  }
+}

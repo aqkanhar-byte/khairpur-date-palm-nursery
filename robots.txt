@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /admin.html
+
+# Sitemap URL final domain connect hone ke baad add hoga.
