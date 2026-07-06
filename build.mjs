@@ -36,6 +36,7 @@ copyIfExists('admin-cloud.css');
 copyIfExists('site.webmanifest');
 copyIfExists('robots.txt');
 copyIfExists('sitemap.xml');
+copyIfExists('index.html');
 copyIfExists('404.html');
 copyIfExists('.nojekyll');
 
