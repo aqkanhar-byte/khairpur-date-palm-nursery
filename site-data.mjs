@@ -14,7 +14,7 @@ export const pages = [
     description: 'Explore Aseel, Qarbala and mature date palms supplied from Khairpur for homes, farms and landscape projects.',
     intro: 'Date palms are long-term assets. We help buyers compare purpose, height, logistics and installation requirements before selecting stock.',
     cta: 'Check palm availability', purpose: 'Date palm availability', image: 'assets/khairpur-date-palm-hero.webp', imageAlt: 'Date palm orchard in the warm light of Khairpur',
-    facts: [['Aseel', 'Available from approximately 1–15 ft'], ['Qarbala', 'Available from approximately 1–10 ft'], ['Service', 'Supply and installation'], ['Origin', 'Khairpur Mirs, Sindh']],
+    facts: [['Aseel', 'Available from approximately 1–20 ft'], ['Qarbala', 'Available from approximately 1–10 ft'], ['Service', 'Supply and installation'], ['Origin', 'Khairpur Mirs, Sindh']],
     sections: [
       ['Aseel Date Palm', 'Khairpur’s best-known commercial date variety and a strong choice for orchard and landscape enquiries. Availability changes by height and season.', ['Multiple height bands', 'Farm and farmhouse use', 'Installation enquiry available']],
       ['Qarbala Date Palm', 'A regional date-palm option available in several young-to-established sizes. Exact stock and specification are confirmed before quotation.', ['Approximately 1–10 ft', 'Garden and farm enquiries', 'Direct nursery confirmation']],
@@ -24,9 +24,9 @@ export const pages = [
   {
     slug: 'aseel-date-palm', eyebrow: 'Khairpur’s signature variety', title: 'Aseel date palms, selected at the source.',
     description: 'Enquire about authentic Aseel date palm plants in multiple heights from Khairpur, with delivery and installation options.',
-    intro: 'Aseel is deeply associated with Khairpur’s date-growing identity. Buyers can enquire about plants from approximately 1 ft through 15 ft, subject to current nursery stock.',
+    intro: 'Aseel is deeply associated with Khairpur’s date-growing identity. Buyers can enquire about plants from approximately 1 ft through 20 ft, subject to current nursery stock.',
     cta: 'Enquire about Aseel', purpose: 'Aseel Date Palm', image: 'assets/khairpur-date-palm-hero.webp', imageAlt: 'Healthy date palms growing in a sunlit orchard',
-    facts: [['Height range', 'Approximately 1–15 ft'], ['Best for', 'Farms, orchards and landscapes'], ['Quote basis', 'Height, quantity and destination'], ['Support', 'Supply and installation']],
+    facts: [['Height range', 'Approximately 1–20 ft'], ['Best for', 'Farms, orchards and landscapes'], ['Quote basis', 'Height, quantity and destination'], ['Support', 'Supply and installation']],
     sections: [
       ['Who is it for?', 'Aseel suits agricultural buyers, farmhouses and landscape projects seeking a date palm with authentic Khairpur provenance.', ['Orchard enquiries', 'Statement landscape planting', 'Bulk and individual orders']],
       ['What affects the quotation?', 'Palm height alone is not enough. Quantity, access, destination and installation scope materially affect handling and transport.', ['Required quantity', 'Delivery city and access', 'Supply-only or installation']],

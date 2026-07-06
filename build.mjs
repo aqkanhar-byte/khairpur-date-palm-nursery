@@ -1,6 +1,8 @@
 import { writeFileSync } from 'node:fs';
 import { business, pages } from './site-data.mjs';
 
+const SITE_URL = 'https://khairpurdatepalms.com';
+
 const esc = (value) => String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
 
 function navigation(page) {
@@ -28,10 +30,11 @@ function pageTemplate(page) {
   const gallery = page.gallery ? `<section class="evidence-gallery section"><div class="container"><div class="gallery-heading"><div><p class="eyebrow"><span></span>Authentic Facebook archive</p><h2>Field, harvest and<br><em>product activity.</em></h2></div><p>Every image below comes from the company’s public media. The large installation image is project evidence; smaller images document seasonal business activity and product communication.</p></div><div class="media-gallery-grid">${page.gallery.map(([src,title,copy,width,height],index)=>`<figure class="gallery-item${index===0?' gallery-feature':''}"><img src="${src}" alt="${esc(title)}" width="${width}" height="${height}" loading="lazy"><figcaption><strong>${esc(title)}</strong><span>${esc(copy)}</span></figcaption></figure>`).join('')}</div></div></section>` : '';
   return `<!doctype html>
 <html lang="en"><head>
-  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="description" content="${esc(page.description)}"><meta name="theme-color" content="#123c2b">
-  <meta property="og:type" content="website"><meta property="og:title" content="${esc(page.title)}"><meta property="og:description" content="${esc(page.description)}">
+  <meta property="og:type" content="website"><meta property="og:title" content="${esc(page.title)}"><meta property="og:description" content="${esc(page.description)}"><meta property="og:url" content="${SITE_URL}/${page.slug}.html"><meta property="og:image" content="${SITE_URL}/${page.image}">
   <title>${esc(page.title)} | ${business.name}</title>
+  <link rel="canonical" href="${SITE_URL}/${page.slug}.html">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="manifest" href="site.webmanifest"><link rel="apple-touch-icon" href="assets/app-icon-192.png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="refined.css">
   <script type="application/ld+json">${schema(page)}</script>
