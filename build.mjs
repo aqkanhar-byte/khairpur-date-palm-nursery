@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, rmSync, writeFileSync, copyFileSync, cpSync } from 'node:fs';
+import { existsSync, mkdirSync, rmSync, writeFileSync, cpSync } from 'node:fs';
 import { join } from 'node:path';
 import { business, pages } from './site-data.mjs';
 
@@ -13,12 +13,14 @@ mkdirSync(OUT_DIR, { recursive: true });
 
 const copyIfExists = (src, dest = src) => {
   if (!existsSync(src)) return;
+
   const target = join(OUT_DIR, dest);
-  if (src.includes('.') && !src.endsWith('/')) {
-    mkdirSync(target.split('/').slice(0, -1).join('/'), { recursive: true });
-    copyFileSync(src, target);
-  } else {
+
+  try {
     cpSync(src, target, { recursive: true });
+  } catch (error) {
+    console.warn(`Warning: Could not copy ${src} to ${target}`);
+    console.warn(error.message);
   }
 };
 
@@ -27,9 +29,15 @@ copyIfExists('styles.css');
 copyIfExists('refined.css');
 copyIfExists('script.js');
 copyIfExists('assistant.js');
+copyIfExists('admin.js');
+copyIfExists('admin.css');
+copyIfExists('admin-refined.css');
+copyIfExists('admin-cloud.css');
 copyIfExists('site.webmanifest');
 copyIfExists('robots.txt');
 copyIfExists('sitemap.xml');
+copyIfExists('404.html');
+copyIfExists('.nojekyll');
 
 const esc = (value) =>
   String(value)
