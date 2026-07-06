@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow,noarchive"><meta name="description" content="Private local operations dashboard for Khairpur Date Palm & Nursery."><meta name="theme-color" content="#0b3023">
+  <title>Business Admin | Khairpur Date Palm & Nursery</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="admin.css"><link rel="stylesheet" href="admin-refined.css"><link rel="stylesheet" href="admin-cloud.css">
+</head>
+<body>
+  <section class="access-screen" id="access-screen" aria-labelledby="access-title">
+    <div class="access-card">
+      <img src="assets/khairpur-logo.jpg" alt="" width="78" height="78">
+      <p class="kicker">Private business workspace</p><h1 id="access-title">Khairpur Admin</h1>
+      <p id="access-copy">Create a device PIN. Records remain inside this browser until a secure cloud backend is connected.</p>
+      <form id="access-form"><label>Device PIN<input id="access-pin" type="password" inputmode="numeric" minlength="6" maxlength="12" required autocomplete="current-password" placeholder="Minimum 6 digits"></label><button type="submit">Continue <span>→</span></button><p class="form-status" id="access-status" aria-live="polite"></p></form>
+      <small>This is device-level privacy, not multi-user cloud authentication. Do not use a shared device.</small>
+    </div>
+  </section>
+
+  <div class="admin-app" id="admin-app" hidden>
+    <aside class="sidebar">
+      <a class="admin-brand" href="admin.html"><img src="assets/khairpur-logo.jpg" alt="" width="46" height="46"><span><b>Khairpur</b><small>Business Admin</small></span></a>
+      <nav aria-label="Admin navigation">
+        <button class="nav-item active" data-view="dashboard"><span>01</span> Dashboard</button>
+        <button class="nav-item" data-view="orders"><span>02</span> Orders & Leads</button>
+        <button class="nav-item" data-view="workers"><span>03</span> Workers</button>
+        <button class="nav-item" data-view="media"><span>04</span> Media Library</button>
+        <button class="nav-item" data-view="logs"><span>05</span> Activity Log</button>
+        <button class="nav-item" data-view="settings"><span>06</span> Backup & Settings</button>
+      </nav>
+      <div class="sidebar-foot"><span><i></i> Local data active</span><button id="lock-admin">Lock workspace</button><a href="index.html">View website ↗</a></div>
+    </aside>
+
+    <main class="admin-main">
+      <header class="admin-topbar"><div><button class="sidebar-toggle" aria-label="Open menu">☰</button><p id="today"></p><strong id="view-title">Business overview</strong></div><div class="top-actions"><button class="search-button" id="global-search">⌕ <span>Search records</span></button><button class="primary-action" data-open-order>＋ New record</button></div></header>
+
+      <section class="admin-view active" data-view-panel="dashboard">
+        <div class="welcome-card"><div><p class="kicker">Operations at a glance</p><h2>What needs attention today?</h2><p>Track every enquiry from first WhatsApp message through delivery and payment.</p></div><button data-open-order>Add WhatsApp lead <span>→</span></button></div>
+        <div class="metric-grid">
+          <article><span>Open pipeline</span><strong id="metric-open">0</strong><small>Leads and active orders</small></article>
+          <article><span>Follow-ups due</span><strong id="metric-followups">0</strong><small>Today or overdue</small></article>
+          <article><span>Confirmed value</span><strong id="metric-value">PKR 0</strong><small>Confirmed + in progress</small></article>
+          <article><span>Active workers</span><strong id="metric-workers">0</strong><small>Available team members</small></article>
+        </div>
+        <div class="dashboard-grid"><section class="panel"><div class="panel-head"><div><p class="kicker">Priority queue</p><h2>Follow-ups</h2></div><button data-view-link="orders">View all</button></div><div id="followup-list" class="record-list empty-state">No follow-ups due.</div></section><section class="panel"><div class="panel-head"><div><p class="kicker">Recent movement</p><h2>Activity</h2></div><button data-view-link="logs">Full log</button></div><div id="recent-logs" class="activity-list empty-state">No activity recorded.</div></section></div>
+      </section>
+
+      <section class="admin-view" data-view-panel="orders">
+        <div class="view-heading"><div><p class="kicker">Sales and operations</p><h2>Orders & Leads</h2><p>One pipeline for enquiries, quotations, confirmed work, delivery and payment.</p></div><button class="primary-action" data-open-order>＋ Add record</button></div>
+        <div class="toolbar"><label class="search-field">⌕<input id="order-search" placeholder="Search customer, phone, city or product"></label><select id="order-filter" aria-label="Filter by status"><option value="all">All statuses</option><option>New lead</option><option>Quoted</option><option>Confirmed</option><option>In progress</option><option>Delivered</option><option>Completed</option><option>Lost</option></select></div>
+        <div class="table-shell"><table><thead><tr><th>Customer</th><th>Requirement</th><th>Status</th><th>Follow-up</th><th>Value</th><th></th></tr></thead><tbody id="orders-body"></tbody></table><div class="empty-state" id="orders-empty">No records yet. Add the first WhatsApp enquiry.</div></div>
+      </section>
+
+      <section class="admin-view" data-view-panel="workers">
+        <div class="view-heading"><div><p class="kicker">Team directory</p><h2>Workers</h2><p>Keep phone numbers, roles, availability and emergency contacts organized.</p></div><button class="primary-action" data-open-worker>＋ Add worker</button></div>
+        <div class="toolbar"><label class="search-field">⌕<input id="worker-search" placeholder="Search name, phone, role or area"></label><select id="worker-filter" aria-label="Filter workers"><option value="all">All workers</option><option>Active</option><option>On leave</option><option>Inactive</option></select></div>
+        <div class="worker-grid" id="worker-grid"></div><div class="empty-state panel" id="workers-empty">No worker data added.</div>
+      </section>
+
+      <section class="admin-view" data-view-panel="media">
+        <div class="view-heading"><div><p class="kicker">Website gallery</p><h2>Pictures & Videos</h2><p>Upload nursery, product, project and installation media for the homepage.</p></div><button class="primary-action" data-open-media>＋ Upload media</button></div>
+        <div class="media-admin-note"><strong>Publishing status</strong><span>Only published items appear on the homepage. Local uploads remain on this browser until cloud storage is connected.</span></div>
+        <div class="toolbar"><label class="search-field">⌕<input id="media-search" placeholder="Search title or category"></label><select id="media-filter"><option value="all">All media</option><option value="published">Published</option><option value="draft">Draft</option><option value="image">Images</option><option value="video">Videos</option></select></div>
+        <div class="admin-media-grid" id="admin-media-grid"></div><div class="empty-state panel" id="media-empty">No media uploaded yet.</div>
+      </section>
+
+      <section class="admin-view" data-view-panel="logs">
+        <div class="view-heading"><div><p class="kicker">Accountability</p><h2>Activity Log</h2><p>Automatic history of records created, updated, exported or removed on this device.</p></div></div>
+        <div class="panel"><div class="activity-list full" id="all-logs"></div><div class="empty-state" id="logs-empty">No activity recorded.</div></div>
+      </section>
+
+      <section class="admin-view" data-view-panel="settings">
+        <div class="view-heading"><div><p class="kicker">Data safety</p><h2>Backup & Settings</h2><p>Export regular backups. Browser data can be lost if storage is cleared or the device fails.</p></div></div>
+        <div class="cloud-auth panel"><div><p class="kicker">Supabase cloud</p><h2>Admin cloud login</h2><p id="cloud-auth-copy">Sign in to sync orders, workers, logs and media across devices.</p></div><form id="cloud-auth-form"><input name="email" type="email" autocomplete="username" required placeholder="Admin email"><input name="password" type="password" autocomplete="current-password" required placeholder="Password"><button type="submit">Sign in</button></form><button id="cloud-signout" hidden>Sign out</button><span id="cloud-auth-status" aria-live="polite"></span></div>
+        <div class="settings-grid"><article class="panel"><span class="setting-icon">↓</span><h2>Export backup</h2><p>Download all orders, workers and logs as one JSON backup file.</p><button id="export-backup">Download backup</button></article><article class="panel"><span class="setting-icon">↑</span><h2>Restore backup</h2><p>Restore a previously exported Khairpur Admin JSON file.</p><label class="file-button">Choose backup<input id="import-backup" type="file" accept="application/json"></label></article><article class="panel"><span class="setting-icon">CSV</span><h2>Export records</h2><p>Download orders or worker directory for spreadsheet use.</p><div class="split-actions"><button id="export-orders">Orders CSV</button><button id="export-workers">Workers CSV</button></div></article><article class="panel warning"><span class="setting-icon">!</span><h2>Privacy reminder</h2><p>Customer and worker phone numbers are personal data. Restrict device access and never share raw backups publicly.</p><button id="change-pin">Change device PIN</button></article></div>
+        <div class="backend-note"><strong>Production upgrade recommended</strong><p>For automatic website lead capture, multiple staff accounts, cloud sync and remote access, connect this dashboard to a secure backend with role-based authentication and encrypted database storage.</p></div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="order-dialog"><form method="dialog" class="dialog-form" id="order-form"><header><div><p class="kicker">Sales record</p><h2 id="order-dialog-title">Add order or lead</h2></div><button value="cancel" class="dialog-close" aria-label="Close">×</button></header><input type="hidden" name="id"><div class="form-grid"><label>Customer name<input name="customer" required maxlength="80"></label><label>Phone / WhatsApp<input name="phone" required inputmode="tel" maxlength="24"></label><label>City / location<input name="city" maxlength="80"></label><label>Record type<select name="type"><option>Plant enquiry</option><option>Installation project</option><option>Date products</option><option>Wholesale / export</option><option>Other</option></select></label><label class="wide">Product / requirement<input name="product" required maxlength="140" placeholder="e.g. 10 Aseel palms, 6 ft"></label><label>Quantity<input name="quantity" maxlength="50"></label><label>Estimated value (PKR)<input name="amount" type="number" min="0" step="1"></label><label>Status<select name="status"><option>New lead</option><option>Quoted</option><option>Confirmed</option><option>In progress</option><option>Delivered</option><option>Completed</option><option>Lost</option></select></label><label>Next follow-up<input name="followup" type="date"></label><label class="wide">Notes<textarea name="notes" rows="3" maxlength="800" placeholder="Site access, height, packaging, payment or delivery notes"></textarea></label></div><footer><button value="cancel" class="secondary">Cancel</button><button type="submit" value="default" class="primary-action">Save record</button></footer></form></dialog>
+
+  <dialog id="worker-dialog"><form method="dialog" class="dialog-form" id="worker-form"><header><div><p class="kicker">Team record</p><h2 id="worker-dialog-title">Add worker</h2></div><button value="cancel" class="dialog-close" aria-label="Close">×</button></header><input type="hidden" name="id"><div class="form-grid"><label>Full name<input name="name" required maxlength="80"></label><label>Phone number<input name="phone" required inputmode="tel" maxlength="24"></label><label>Role / skill<input name="role" required maxlength="80" placeholder="e.g. Palm installer"></label><label>Work area<input name="area" maxlength="80"></label><label>Joining date<input name="joined" type="date"></label><label>Status<select name="status"><option>Active</option><option>On leave</option><option>Inactive</option></select></label><label>Emergency contact<input name="emergency" inputmode="tel" maxlength="60"></label><label class="wide">Notes<textarea name="notes" rows="3" maxlength="600"></textarea></label></div><footer><button value="cancel" class="secondary">Cancel</button><button type="submit" value="default" class="primary-action">Save worker</button></footer></form></dialog>
+
+  <dialog id="media-dialog"><form method="dialog" class="dialog-form" id="media-form"><header><div><p class="kicker">Website media</p><h2>Upload picture or video</h2></div><button value="cancel" class="dialog-close" aria-label="Close">×</button></header><div class="form-grid"><label class="wide upload-zone">Select file<input name="file" type="file" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm" required><span>JPG, PNG, WebP, MP4 or WebM</span></label><label>Title<input name="title" required maxlength="100"></label><label>Category<select name="category"><option>Projects</option><option>Products</option><option>Nursery</option><option>Installation</option><option>Harvest</option><option>Delivery</option><option>Team</option><option>Other</option></select></label><label class="wide">Description<textarea name="description" rows="3" maxlength="300"></textarea></label><label class="publish-check wide"><input name="published" type="checkbox" checked> Publish on homepage immediately</label></div><footer><button value="cancel" class="secondary">Cancel</button><button type="submit" value="default" class="primary-action">Upload media</button></footer><p class="upload-status" id="upload-status" aria-live="polite"></p></form></dialog>
+
+  <dialog id="confirm-dialog" class="confirm-dialog"><form method="dialog"><span>!</span><h2>Delete this record?</h2><p>This cannot be undone unless you have a backup.</p><div><button value="cancel" class="secondary">Keep record</button><button value="confirm" class="danger">Delete</button></div></form></dialog>
+  <script src="supabase-config.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-service.js"></script><script src="media-gallery.js"></script><script src="admin.js"></script>
+</body></html>
