@@ -17,6 +17,15 @@
     </div>
   </section>
 
+  <section class="access-screen" id="invite-screen" aria-labelledby="invite-title" hidden>
+    <div class="access-card">
+      <img src="assets/khairpur-logo.jpg" alt="" width="78" height="78">
+      <p class="kicker">Cloud admin setup</p><h1 id="invite-title">Set your password</h1>
+      <p>You’ve followed an invite/reset link for <strong id="invite-email"></strong>. Choose a password to finish setting up cloud sign-in.</p>
+      <form id="invite-form"><label>New password<input id="invite-password" type="password" minlength="8" required autocomplete="new-password" placeholder="At least 8 characters"></label><label>Confirm password<input id="invite-password-confirm" type="password" minlength="8" required autocomplete="new-password" placeholder="Repeat password"></label><button type="submit">Set password <span>→</span></button><p class="form-status" id="invite-status" aria-live="polite"></p></form>
+    </div>
+  </section>
+
   <div class="admin-app" id="admin-app" hidden>
     <aside class="sidebar">
       <a class="admin-brand" href="admin.html"><img src="assets/khairpur-logo.jpg" alt="" width="46" height="46"><span><b>Khairpur Date Palm</b><small>Business Admin</small></span></a>

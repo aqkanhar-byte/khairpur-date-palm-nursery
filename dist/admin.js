@@ -27,6 +27,22 @@
   accessForm.addEventListener('submit',async(event)=>{event.preventDefault();const pin=accessPin.value.trim();if(!/^\d{6,12}$/.test(pin)){accessStatus.textContent='Use a 6–12 digit PIN.';return}if(!hasPin()){localStorage.setItem(PIN_KEY,await makePinRecord(pin));log('Security','Device PIN created');save();showAdmin();return}try{const record=JSON.parse(localStorage.getItem(PIN_KEY));const digest=await hash(pin,record.salt);if(digest===record.hash){accessStatus.textContent='';showAdmin()}else accessStatus.textContent='Incorrect PIN.'}catch{accessStatus.textContent='PIN record is damaged. Restore browser data or reset this workspace.'}});
   $('#lock-admin').addEventListener('click',lockAdmin);
 
+  const inviteScreen=$('#invite-screen'),inviteEmail=$('#invite-email'),inviteForm=$('#invite-form'),invitePassword=$('#invite-password'),invitePasswordConfirm=$('#invite-password-confirm'),inviteStatus=$('#invite-status');
+  function showInviteScreen(session){accessScreen.hidden=true;inviteScreen.hidden=false;inviteEmail.textContent=session?.user?.email||'your account'}
+  if(window.KhairpurCloud){
+    window.KhairpurCloud.client.auth.onAuthStateChange((event,session)=>{if(event==='PASSWORD_RECOVERY')showInviteScreen(session)});
+  }
+  inviteForm?.addEventListener('submit',async(event)=>{
+    event.preventDefault();
+    if(invitePassword.value.length<8){inviteStatus.textContent='Password must be at least 8 characters.';return}
+    if(invitePassword.value!==invitePasswordConfirm.value){inviteStatus.textContent='Passwords do not match.';return}
+    inviteStatus.textContent='Saving password…';
+    const{error}=await window.KhairpurCloud.client.auth.updateUser({password:invitePassword.value});
+    if(error){inviteStatus.textContent=`Could not set password: ${error.message}`;return}
+    inviteStatus.textContent='Password set. You can now sign in from Backup & Settings → Admin cloud login.';
+    setTimeout(()=>{inviteScreen.hidden=true;accessScreen.hidden=false},2000);
+  });
+
   const titles={dashboard:'Business overview',orders:'Orders & leads',workers:'Worker directory',media:'Pictures & videos',logs:'Activity history',settings:'Backup & settings'};
   function switchView(name){$$('.nav-item').forEach((item)=>item.classList.toggle('active',item.dataset.view===name));$$('.admin-view').forEach((panel)=>panel.classList.toggle('active',panel.dataset.viewPanel===name));$('#view-title').textContent=titles[name];$('.sidebar').classList.remove('open');scrollTo({top:0,behavior:'smooth'})}
   $$('.nav-item').forEach((button)=>button.addEventListener('click',()=>switchView(button.dataset.view)));
