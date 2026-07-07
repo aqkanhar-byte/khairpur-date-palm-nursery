@@ -1,11 +1,11 @@
 (() => {
   const PHONE = '923023111589';
   const K = [
-    [['aseel aur qarbala','aseel vs qarbala','aseel qarbala difference','dono varieties'],'Aseel Khairpur ki signature commercial variety hai aur public catalogue mein approximately 1–15 ft listed hai; Qarbala approximately 1–10 ft listed hai. Best choice intended use aur current stock dekh kar hoti hai.'],
-    [['aseel','aseel palm','aseel plant','aseel variety'],'Aseel Khairpur ki mashhoor date palm variety hai. Public catalogue mein plants approximately 1–15 ft listed hain; current stock WhatsApp par confirm hota hai.'],
+    [['aseel aur qarbala','aseel vs qarbala','aseel qarbala difference','dono varieties'],'Aseel Khairpur ki signature commercial variety hai aur public catalogue mein approximately 1–20 ft listed hai; Qarbala approximately 1–10 ft listed hai. Best choice intended use aur current stock dekh kar hoti hai.'],
+    [['aseel','aseel palm','aseel plant','aseel variety'],'Aseel Khairpur ki mashhoor date palm variety hai. Public catalogue mein plants approximately 1–20 ft listed hain; current stock WhatsApp par confirm hota hai.'],
     [['qarbala','karbala','qarbala palm','qarbala plant'],'Qarbala palms approximately 1–10 ft listed hain. Exact height, quantity aur availability nursery confirm karti hai.'],
     [['variety','palm types','konsi palm','which palm'],'Highlighted varieties Aseel aur Qarbala hain. Farm, home ya project aur preferred height batayein taa-ke suitable option suggest ho.'],
-    [['height','size','kitne foot','feet available'],'Aseel approximately 1–15 ft aur Qarbala 1–10 ft listed hain. Har size har waqt available nahi hota.'],
+    [['height','size','kitne foot','feet available'],'Aseel approximately 1–20 ft aur Qarbala 1–10 ft listed hain. Har size har waqt available nahi hota.'],
     [['price','rate','cost','kitne ka','quotation'],'Rate variety, height, quantity, destination aur installation par depend karta hai. In details ke baghair accurate price dena responsible nahi.'],
     [['availability','stock','available now','ready stock'],'Stock change hota rehta hai. Variety, height aur quantity WhatsApp par bhej kar current dated photos mangwayein.'],
     [['male female','gender','female palm','fruiting'],'Gender aur fruiting status specific plant ke liye written confirm karein. Sirf height fruiting guarantee nahi hoti.'],
