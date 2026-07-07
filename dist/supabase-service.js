@@ -1,4 +1,5 @@
 (() => {
+  window.KHAIRPUR_AUTH_HASH_TYPE=new URLSearchParams(location.hash.slice(1)).get('type');
   const config=window.KHAIRPUR_SUPABASE;if(!config?.url||!config?.anonKey||!window.supabase)return;
   const client=window.supabase.createClient(config.url,config.anonKey,{auth:{persistSession:true,autoRefreshToken:true}});
   const orderRow=(x)=>({id:x.id,customer:x.customer,phone:x.phone,city:x.city||null,type:x.type,product:x.product,quantity:x.quantity||null,amount:Number(x.amount)||0,status:x.status,followup:x.followup||null,notes:x.notes||null});

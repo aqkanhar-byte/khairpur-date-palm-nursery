@@ -29,8 +29,9 @@
 
   const inviteScreen=$('#invite-screen'),inviteEmail=$('#invite-email'),inviteForm=$('#invite-form'),invitePassword=$('#invite-password'),invitePasswordConfirm=$('#invite-password-confirm'),inviteStatus=$('#invite-status');
   function showInviteScreen(session){accessScreen.hidden=true;inviteScreen.hidden=false;inviteEmail.textContent=session?.user?.email||'your account'}
+  const isInviteOrRecoveryLink=window.KHAIRPUR_AUTH_HASH_TYPE==='invite'||window.KHAIRPUR_AUTH_HASH_TYPE==='recovery';
   if(window.KhairpurCloud){
-    window.KhairpurCloud.client.auth.onAuthStateChange((event,session)=>{if(event==='PASSWORD_RECOVERY')showInviteScreen(session)});
+    window.KhairpurCloud.client.auth.onAuthStateChange((event,session)=>{if(event==='PASSWORD_RECOVERY'||(event==='SIGNED_IN'&&isInviteOrRecoveryLink))showInviteScreen(session)});
   }
   inviteForm?.addEventListener('submit',async(event)=>{
     event.preventDefault();
