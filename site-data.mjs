@@ -57,7 +57,7 @@ export const pages = [
     ],
   },
   {
-    slug: 'palm-supply-delivery', eyebrow: 'From nursery to destination', title: 'Palm supply and delivery, planned properly.',
+    slug: 'palm-supply-delivery', eyebrow: 'From nursery to destination', title: 'Palm supply and delivery, planned properly.', mediaCategory: 'Delivery',
     description: 'Date palm supply and delivery enquiries from Khairpur for homes, farms and commercial landscape projects across Pakistan.',
     intro: 'A reliable delivery plan starts with the correct palm specification, quantity, destination and site-access information—not a generic transport estimate.',
     cta: 'Request delivery assessment', purpose: 'Palm supply and delivery', image: 'assets/real-palm-installation.webp', imageAlt: 'Mature date palm being handled by the Khairpur field team', imageAuthentic: true,
@@ -69,7 +69,7 @@ export const pages = [
     ],
   },
   {
-    slug: 'palm-installation', eyebrow: 'Verified field capability', title: 'Professional mature-palm installation.',
+    slug: 'palm-installation', eyebrow: 'Verified field capability', title: 'Professional mature-palm installation.', mediaCategory: 'Installation',
     description: 'Machinery-assisted date palm installation and relocation enquiries backed by authentic field-work evidence.',
     intro: 'The Facebook archive contains authentic evidence of machinery-assisted mature-palm positioning and installation. Every new site still requires its own assessment.',
     cta: 'Discuss an installation', purpose: 'Professional palm installation', image: 'assets/real-palm-installation.webp', imageAlt: 'Machinery-assisted mature date palm installation by the company field team', imageAuthentic: true,
@@ -106,7 +106,7 @@ export const pages = [
     ],
   },
   {
-    slug: 'projects', eyebrow: 'Evidence over claims', title: 'Real work from the field.',
+    slug: 'projects', eyebrow: 'Evidence over claims', title: 'Real work from the field.', mediaCategory: 'Projects',
     description: 'Verified project evidence from Khairpur Date Palm & Nursery, beginning with mature palm installation.',
     intro: 'Only projects supported by authentic company media belong here. Stock imagery and AI-generated scenes are not presented as completed work.',
     cta: 'Discuss your project', purpose: 'Project enquiry', image: 'assets/real-palm-installation.webp', imageAlt: 'Authentic machinery-assisted date palm installation project', imageAuthentic: true,

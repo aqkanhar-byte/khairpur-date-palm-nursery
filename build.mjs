@@ -121,6 +121,10 @@ function pageTemplate(page) {
         .join('')}</div></div></section>`
     : '';
 
+  const dynamicGallery = page.mediaCategory
+    ? `<section class="media-showcase section"><div class="container"><div class="section-heading split"><div><p class="eyebrow"><span></span>Latest uploads</p><h2>See it.<br><em>Not just read it.</em></h2></div><p>Photos and videos published from the admin dashboard for this page. New uploads appear here automatically.</p></div><div class="public-media-grid" data-public-gallery="${esc(page.mediaCategory)}" aria-live="polite"><p class="media-loading">Loading gallery…</p></div></div></section>`
+    : '';
+
   const pricing = page.pricing
     ? `<section class="pricing-section section"><div class="container"><p class="eyebrow"><span></span>Indicative pricing</p><div class="section-heading split"><h2>Typical price guide.<br><em>Confirmed at enquiry.</em></h2><p>Prices vary with current nursery stock, quantity and delivery destination. Use this as a starting guide, then confirm the final quotation on WhatsApp.</p></div><table class="price-table"><thead><tr><th>Plant</th><th>Size</th><th>Price</th></tr></thead><tbody>${page.pricing
         .map(([plant, size, price]) => `<tr><td>${esc(plant)}</td><td>${esc(size)}</td><td>${esc(price)}</td></tr>`)
@@ -151,11 +155,11 @@ function pageTemplate(page) {
 <main id="main">
   <section class="subhero"><div class="container subhero-grid"><div class="subhero-copy"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><span aria-current="page">${esc(page.title)}</span></nav><p class="eyebrow light"><span></span>${esc(page.eyebrow)}</p><h1>${esc(page.title)}</h1><p>${esc(page.intro)}</p><a class="button button-gold" href="${whatsapp}" target="_blank" rel="noopener">${esc(page.cta)} <span>→</span></a></div>${heroMedia}</div></section>
   <section class="fact-band"><div class="container">${page.facts.map(([label, value]) => `<div><span>${esc(label)}</span><strong>${esc(value)}</strong></div>`).join('')}</div></section>${founder}
-  <section class="detail-section section"><div class="container"><p class="eyebrow"><span></span>What buyers need to know</p>${page.sections.map(section).join('')}</div></section>${pricing}${gallery}
+  <section class="detail-section section"><div class="container"><p class="eyebrow"><span></span>What buyers need to know</p>${page.sections.map(section).join('')}</div></section>${pricing}${gallery}${dynamicGallery}
   <section class="inner-cta"><div class="container"><div><p class="eyebrow light"><span></span>Direct, structured enquiry</p><h2>Send the right details.<br><em>Get a more useful answer.</em></h2></div><a class="button button-gold" href="${whatsapp}" target="_blank" rel="noopener">Continue on WhatsApp <span>→</span></a></div></section>
 </main>
 <footer><div class="container footer-grid"><div><a class="brand footer-brand" href="index.html"><span class="brand-mark">K</span><span><strong>Khairpur</strong><small>Date Palm & Nursery</small></span></a><p>Authentic date palms, date products and evidence-backed service information.</p></div><div><h3>Products</h3><a href="date-palms.html">Date palms</a><a href="date-products.html">Date products</a><a href="wholesale-export.html">Wholesale</a></div><div><h3>Services</h3><a href="palm-supply-delivery.html">Supply & delivery</a><a href="palm-installation.html">Installation</a><a href="projects.html">Projects</a></div><div><h3>Contact</h3><a href="tel:+${business.phoneIntl}">${business.phone}</a><a href="mailto:${business.email}">${business.email}</a><span>${business.location}</span></div></div><div class="container footer-bottom"><span>© ${new Date().getFullYear()} ${business.name}</span><span>Rooted in Khairpur. Growing across Pakistan.</span></div></footer>
-<a class="floating-wa" href="${whatsapp}" target="_blank" rel="noopener" aria-label="Start WhatsApp enquiry">◉ <span>WhatsApp enquiry</span></a><nav class="mobile-conversion" aria-label="Quick contact"><a href="tel:+${business.phoneIntl}"><span>Call us</span><strong>${business.phone}</strong></a><a href="${whatsapp}" target="_blank" rel="noopener"><span>WhatsApp</span><strong>Start enquiry</strong></a></nav><script src="script.js"></script><script src="assistant.js"></script></body></html>`;
+<a class="floating-wa" href="${whatsapp}" target="_blank" rel="noopener" aria-label="Start WhatsApp enquiry">◉ <span>WhatsApp enquiry</span></a><nav class="mobile-conversion" aria-label="Quick contact"><a href="tel:+${business.phoneIntl}"><span>Call us</span><strong>${business.phone}</strong></a><a href="${whatsapp}" target="_blank" rel="noopener"><span>WhatsApp</span><strong>Start enquiry</strong></a></nav><script src="script.js"></script>${page.mediaCategory ? '<script src="supabase-config.js"></script><script src="media-gallery.js"></script>' : ''}<script src="assistant.js"></script></body></html>`;
 }
 
 for (const page of pages) {
