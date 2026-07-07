@@ -109,6 +109,14 @@ function pageTemplate(page) {
         .join('')}</tbody></table></div></section>`
     : '';
 
+  const whatsappCeo = page.ceo
+    ? `https://wa.me/${business.phoneIntl}?text=${encodeURIComponent(`Assalam-o-Alaikum, mujhe ${page.ceo.name} se baat karni hai.\n\n`)}`
+    : '';
+
+  const founder = page.ceo
+    ? `<section class="founder-section section"><div class="container founder-grid"><div class="founder-visual"><img src="${page.ceo.image}" alt="${esc(page.ceo.name)}, ${esc(page.ceo.designation)} of ${business.name}" width="480" height="580" loading="lazy"></div><div class="founder-copy"><p class="eyebrow"><span></span>Leadership</p><h2>${esc(page.ceo.name)}</h2><span class="founder-role">${esc(page.ceo.designation)}</span><p class="founder-credentials">${esc(page.ceo.credentials)}</p><p>${esc(page.ceo.bio)}</p><blockquote class="founder-quote">“${esc(page.ceo.quote)}”<cite>— ${esc(page.ceo.name)}</cite></blockquote><div class="founder-contact"><a class="button button-gold" href="${whatsappCeo}" target="_blank" rel="noopener">WhatsApp ${esc(page.ceo.name.split(' ')[0])} <span>→</span></a><a class="text-link" href="mailto:${business.email}">✉ ${business.email}</a></div></div></div></section>`
+    : '';
+
   return `<!doctype html>
 <html lang="en"><head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -124,7 +132,7 @@ function pageTemplate(page) {
 <header class="site-header"><a class="brand" href="index.html"><img class="brand-logo" src="assets/khairpur-logo.jpg" alt="" width="52" height="52"><span><strong>Khairpur</strong><small>Date Palm & Nursery</small></span></a><button class="menu-toggle" aria-expanded="false" aria-controls="nav"><span></span><span></span><span></span><b class="sr-only">Menu</b></button><nav id="nav" aria-label="Main navigation">${navigation(page)}</nav><a class="button button-small header-cta" href="contact.html">Request a quote <span>↗</span></a></header>
 <main id="main">
   <section class="subhero"><div class="container subhero-grid"><div class="subhero-copy"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><span aria-current="page">${esc(page.title)}</span></nav><p class="eyebrow light"><span></span>${esc(page.eyebrow)}</p><h1>${esc(page.title)}</h1><p>${esc(page.intro)}</p><a class="button button-gold" href="${whatsapp}" target="_blank" rel="noopener">${esc(page.cta)} <span>→</span></a></div>${heroMedia}</div></section>
-  <section class="fact-band"><div class="container">${page.facts.map(([label, value]) => `<div><span>${esc(label)}</span><strong>${esc(value)}</strong></div>`).join('')}</div></section>
+  <section class="fact-band"><div class="container">${page.facts.map(([label, value]) => `<div><span>${esc(label)}</span><strong>${esc(value)}</strong></div>`).join('')}</div></section>${founder}
   <section class="detail-section section"><div class="container"><p class="eyebrow"><span></span>What buyers need to know</p>${page.sections.map(section).join('')}</div></section>${pricing}${gallery}
   <section class="inner-cta"><div class="container"><div><p class="eyebrow light"><span></span>Direct, structured enquiry</p><h2>Send the right details.<br><em>Get a more useful answer.</em></h2></div><a class="button button-gold" href="${whatsapp}" target="_blank" rel="noopener">Continue on WhatsApp <span>→</span></a></div></section>
 </main>
