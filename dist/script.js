@@ -100,6 +100,27 @@ if (quoteForm) {
 const year = document.querySelector('#year');
 if (year) year.textContent = new Date().getFullYear();
 
+const heroImage = document.querySelector('.hero-image');
+if (heroImage && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const rotation = [
+    'assets/khairpur-date-palm-hero.webp',
+    'assets/date-orchard-editorial-v2.webp',
+    'assets/farmhouse-palm-editorial.webp',
+    'assets/young-palm-nursery-editorial.webp',
+    'assets/real-palm-installation.webp',
+  ].filter((src) => !heroImage.src.endsWith(src));
+  rotation.forEach((src) => { new Image().src = src; });
+  let index = 0;
+  setInterval(() => {
+    heroImage.style.opacity = '0';
+    setTimeout(() => {
+      heroImage.src = rotation[index];
+      index = (index + 1) % rotation.length;
+      heroImage.style.opacity = '1';
+    }, 400);
+  }, 2000);
+}
+
 (() => {
   const KEY = 'khairpur_build_version';
   const checkVersion = async () => {
