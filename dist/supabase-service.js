@@ -1,0 +1,14 @@
+(() => {
+  const config=window.KHAIRPUR_SUPABASE;if(!config?.url||!config?.anonKey||!window.supabase)return;
+  const client=window.supabase.createClient(config.url,config.anonKey,{auth:{persistSession:true,autoRefreshToken:true}});
+  const orderRow=(x)=>({id:x.id,customer:x.customer,phone:x.phone,city:x.city||null,type:x.type,product:x.product,quantity:x.quantity||null,amount:Number(x.amount)||0,status:x.status,followup:x.followup||null,notes:x.notes||null});
+  const workerRow=(x)=>({id:x.id,name:x.name,phone:x.phone,role:x.role,area:x.area||null,joined:x.joined||null,status:x.status,emergency:x.emergency||null,notes:x.notes||null});
+  const fromRow=(r)=>({...r,createdAt:r.created_at,updatedAt:r.updated_at});
+  window.KhairpurCloud={client,session:async()=>(await client.auth.getSession()).data.session,signIn:(email,password)=>client.auth.signInWithPassword({email,password}),signOut:()=>client.auth.signOut(),
+    loadBusinessData:async()=>{const[o,w,l]=await Promise.all([client.from('orders').select('*').order('created_at',{ascending:false}),client.from('workers').select('*').order('created_at',{ascending:false}),client.from('activity_logs').select('*').order('created_at',{ascending:false}).limit(500)]);if(o.error)throw o.error;if(w.error)throw w.error;if(l.error)throw l.error;return{orders:o.data.map(fromRow),workers:w.data.map(fromRow),logs:l.data.map(r=>({id:r.id,action:r.action,detail:r.detail,at:r.created_at}))}},
+    saveOrder:x=>client.from('orders').upsert(orderRow(x)),deleteOrder:id=>client.from('orders').delete().eq('id',id),saveWorker:x=>client.from('workers').upsert(workerRow(x)),deleteWorker:id=>client.from('workers').delete().eq('id',id),addLog:x=>client.from('activity_logs').upsert({id:x.id,action:x.action,detail:x.detail}),
+    allMedia:async()=>{const r=await client.from('media').select('*').order('created_at',{ascending:false});if(r.error)throw r.error;return r.data},
+    uploadMedia:async(record,file)=>{const safe=file.name.toLowerCase().replace(/[^a-z0-9._-]+/g,'-'),path=`${new Date().toISOString().slice(0,10)}/${record.id}-${safe}`,u=await client.storage.from('business-media').upload(path,file,{contentType:file.type});if(u.error)throw u.error;const publicUrl=client.storage.from('business-media').getPublicUrl(path).data.publicUrl,i=await client.from('media').insert({id:record.id,title:record.title,category:record.category,description:record.description||null,media_type:record.type,mime_type:file.type,storage_path:path,public_url:publicUrl,size_bytes:file.size,published:record.published}).select().single();if(i.error){await client.storage.from('business-media').remove([path]);throw i.error}return i.data},
+    setMediaPublished:(id,published)=>client.from('media').update({published}).eq('id',id),deleteMedia:async item=>{const r=await client.storage.from('business-media').remove([item.storage_path]);if(r.error)throw r.error;return client.from('media').delete().eq('id',item.id)}
+  };
+})();
