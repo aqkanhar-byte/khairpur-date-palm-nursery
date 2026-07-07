@@ -1,9 +1,16 @@
-import { existsSync, mkdirSync, rmSync, writeFileSync, cpSync } from 'node:fs';
+import { existsSync, mkdirSync, rmSync, writeFileSync, readFileSync, cpSync } from 'node:fs';
 import { join } from 'node:path';
 import { business, pages } from './site-data.mjs';
 
 const SITE_URL = 'https://khairpurdatepalms.com';
 const OUT_DIR = 'dist';
+const BUILD_ID = Date.now();
+
+// Appends a build-id query string to local .js/.css references so every
+// deploy forces browsers to fetch fresh copies, regardless of cache headers
+// or a stale service worker. Leaves external (http/https) URLs untouched.
+const versionAssets = (html) =>
+  html.replace(/(src|href)="([a-zA-Z0-9_.-]+\.(?:js|css))"/g, (match, attr, path) => `${attr}="${path}?v=${BUILD_ID}"`);
 
 if (existsSync(OUT_DIR)) {
   rmSync(OUT_DIR, { recursive: true, force: true });
@@ -43,6 +50,13 @@ copyIfExists('sitemap.xml');
 copyIfExists('index.html');
 copyIfExists('admin.html');
 copyIfExists('404.html');
+
+for (const file of ['index.html', 'admin.html', '404.html']) {
+  const target = join(OUT_DIR, file);
+  if (existsSync(target)) writeFileSync(target, versionAssets(readFileSync(target, 'utf8')), 'utf8');
+}
+
+writeFileSync(join(OUT_DIR, 'version.json'), JSON.stringify({ build: BUILD_ID }));
 copyIfExists('.nojekyll');
 
 const esc = (value) =>
@@ -145,7 +159,7 @@ function pageTemplate(page) {
 }
 
 for (const page of pages) {
-  writeFileSync(join(OUT_DIR, `${page.slug}.html`), pageTemplate(page), 'utf8');
+  writeFileSync(join(OUT_DIR, `${page.slug}.html`), versionAssets(pageTemplate(page)), 'utf8');
 }
 
 console.log(`Built ${pages.length} content pages into ${OUT_DIR}/`);

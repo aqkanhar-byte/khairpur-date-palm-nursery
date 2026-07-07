@@ -99,3 +99,20 @@ if (quoteForm) {
 
 const year = document.querySelector('#year');
 if (year) year.textContent = new Date().getFullYear();
+
+(() => {
+  const KEY = 'khairpur_build_version';
+  const checkVersion = async () => {
+    try {
+      const res = await fetch('/version.json?cb=' + Date.now(), { cache: 'no-store' });
+      if (!res.ok) return;
+      const { build } = await res.json();
+      const stored = sessionStorage.getItem(KEY);
+      if (stored === null) { sessionStorage.setItem(KEY, build); return; }
+      if (String(stored) !== String(build)) location.reload();
+    } catch { /* offline or blocked — ignore, cached copy still works */ }
+  };
+  checkVersion();
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') checkVersion(); });
+  addEventListener('pageshow', (event) => { if (event.persisted) checkVersion(); });
+})();
