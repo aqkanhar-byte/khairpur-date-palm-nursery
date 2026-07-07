@@ -118,7 +118,7 @@ if (heroImage && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
       index = (index + 1) % rotation.length;
       heroImage.style.opacity = '1';
     }, 400);
-  }, 2000);
+  }, 7000);
 }
 
 (() => {
