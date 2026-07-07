@@ -20,15 +20,15 @@
 
   const accessScreen=$('#access-screen'),app=$('#admin-app'),accessCopy=$('#access-copy'),accessForm=$('#access-form'),accessPin=$('#access-pin'),accessStatus=$('#access-status');
   const hasPin=()=>Boolean(localStorage.getItem(PIN_KEY));
-  function showAdmin(){sessionStorage.setItem('khairpur_admin_unlocked','1');accessScreen.hidden=true;app.hidden=false;renderAll()}
-  function lockAdmin(){sessionStorage.removeItem('khairpur_admin_unlocked');app.hidden=true;accessScreen.hidden=false;accessPin.value='';accessCopy.textContent='Enter the device PIN to open private business records.';accessPin.focus()}
+  function showAdmin(){sessionStorage.setItem('khairpur_admin_unlocked','1');$('#invite-screen').hidden=true;accessScreen.hidden=true;app.hidden=false;renderAll()}
+  function lockAdmin(){sessionStorage.removeItem('khairpur_admin_unlocked');$('#invite-screen').hidden=true;app.hidden=true;accessScreen.hidden=false;accessPin.value='';accessCopy.textContent='Enter the device PIN to open private business records.';accessPin.focus()}
   if(hasPin())accessCopy.textContent='Enter the device PIN to open private business records.';
   if(hasPin()&&sessionStorage.getItem('khairpur_admin_unlocked')==='1')showAdmin();
   accessForm.addEventListener('submit',async(event)=>{event.preventDefault();const pin=accessPin.value.trim();if(!/^\d{6,12}$/.test(pin)){accessStatus.textContent='Use a 6–12 digit PIN.';return}if(!hasPin()){localStorage.setItem(PIN_KEY,await makePinRecord(pin));log('Security','Device PIN created');save();showAdmin();return}try{const record=JSON.parse(localStorage.getItem(PIN_KEY));const digest=await hash(pin,record.salt);if(digest===record.hash){accessStatus.textContent='';showAdmin()}else accessStatus.textContent='Incorrect PIN.'}catch{accessStatus.textContent='PIN record is damaged. Restore browser data or reset this workspace.'}});
   $('#lock-admin').addEventListener('click',lockAdmin);
 
   const inviteScreen=$('#invite-screen'),inviteEmail=$('#invite-email'),inviteForm=$('#invite-form'),invitePassword=$('#invite-password'),invitePasswordConfirm=$('#invite-password-confirm'),inviteStatus=$('#invite-status');
-  function showInviteScreen(session){accessScreen.hidden=true;inviteScreen.hidden=false;inviteEmail.textContent=session?.user?.email||'your account'}
+  function showInviteScreen(session){accessScreen.hidden=true;app.hidden=true;inviteScreen.hidden=false;inviteEmail.textContent=session?.user?.email||'your account';history.replaceState(null,'',location.pathname+location.search)}
   const isInviteOrRecoveryLink=window.KHAIRPUR_AUTH_HASH_TYPE==='invite'||window.KHAIRPUR_AUTH_HASH_TYPE==='recovery';
   if(window.KhairpurCloud){
     window.KhairpurCloud.client.auth.onAuthStateChange((event,session)=>{if(event==='PASSWORD_RECOVERY'||(event==='SIGNED_IN'&&isInviteOrRecoveryLink))showInviteScreen(session)});
