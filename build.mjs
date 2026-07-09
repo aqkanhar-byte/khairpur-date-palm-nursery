@@ -141,6 +141,15 @@ function pageTemplate(page) {
 
   return `<!doctype html>
 <html lang="en"><head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G9KCMRVKYP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-G9KCMRVKYP');
+</script>
+<!-- End Google tag (gtag.js) -->
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="description" content="${esc(page.description)}"><meta name="theme-color" content="#123c2b">
   <meta property="og:type" content="website"><meta property="og:title" content="${esc(page.title)}"><meta property="og:description" content="${esc(page.description)}"><meta property="og:url" content="${SITE_URL}/${page.slug}.html"><meta property="og:image" content="${SITE_URL}/${page.image}">
