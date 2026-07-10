@@ -91,8 +91,10 @@ function schema(page) {
     about: {
       '@type': 'LocalBusiness',
       name: business.name,
+      url: `${SITE_URL}/`,
       telephone: `+${business.phoneIntl}`,
       email: business.email,
+      address: { '@type': 'PostalAddress', addressLocality: 'Khairpur Mirs', addressRegion: 'Sindh', addressCountry: 'PK' },
       areaServed: 'Pakistan',
     },
   }).replaceAll('<', '\\u003c');
