@@ -46,7 +46,6 @@ copyIfExists('media-gallery.js');
 copyIfExists('sw.js');
 copyIfExists('site.webmanifest');
 copyIfExists('robots.txt');
-copyIfExists('sitemap.xml');
 copyIfExists('index.html');
 copyIfExists('admin.html');
 copyIfExists('404.html');
@@ -96,6 +95,17 @@ function schema(page) {
       email: business.email,
       areaServed: 'Pakistan',
     },
+  }).replaceAll('<', '\\u003c');
+}
+
+function breadcrumbSchema(page) {
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
+      { '@type': 'ListItem', position: 2, name: page.title, item: `${SITE_URL}/${page.slug}.html` },
+    ],
   }).replaceAll('<', '\\u003c');
 }
 
@@ -152,12 +162,14 @@ function pageTemplate(page) {
 <!-- End Google tag (gtag.js) -->
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="description" content="${esc(page.description)}"><meta name="theme-color" content="#123c2b">
-  <meta property="og:type" content="website"><meta property="og:title" content="${esc(page.title)}"><meta property="og:description" content="${esc(page.description)}"><meta property="og:url" content="${SITE_URL}/${page.slug}.html"><meta property="og:image" content="${SITE_URL}/${page.image}">
+  <meta property="og:type" content="website"><meta property="og:site_name" content="${esc(business.name)}"><meta property="og:locale" content="en_PK"><meta property="og:title" content="${esc(page.title)}"><meta property="og:description" content="${esc(page.description)}"><meta property="og:url" content="${SITE_URL}/${page.slug}.html"><meta property="og:image" content="${SITE_URL}/${page.image}">
+  <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${esc(page.title)}"><meta name="twitter:description" content="${esc(page.description)}"><meta name="twitter:image" content="${SITE_URL}/${page.image}">
   <title>${esc(page.title)} | ${business.name}</title>
   <link rel="canonical" href="${SITE_URL}/${page.slug}.html">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="manifest" href="site.webmanifest"><link rel="apple-touch-icon" href="assets/app-icon-192.png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="refined.css">
   <script type="application/ld+json">${schema(page)}</script>
+  <script type="application/ld+json">${breadcrumbSchema(page)}</script>
 </head><body class="inner-page"><a class="skip-link" href="#main">Skip to content</a>
 <div class="topbar"><span>Nursery-grown in Khairpur, Sindh</span><a href="tel:+${business.phoneIntl}">Call: ${business.phone}</a></div>
 <header class="site-header"><a class="brand" href="index.html"><img class="brand-logo" src="assets/khairpur-logo.jpg" alt="" width="52" height="52"><span><strong>Khairpur</strong><small>Date Palm & Nursery</small></span></a><button class="menu-toggle" aria-expanded="false" aria-controls="nav"><span></span><span></span><span></span><b class="sr-only">Menu</b></button><nav id="nav" aria-label="Main navigation">${navigation(page)}</nav><a class="button button-small header-cta" href="contact.html">Request a quote <span>↗</span></a></header>
@@ -174,5 +186,20 @@ function pageTemplate(page) {
 for (const page of pages) {
   writeFileSync(join(OUT_DIR, `${page.slug}.html`), versionAssets(pageTemplate(page)), 'utf8');
 }
+
+const PRIORITY = { 'date-palms': 0.9, 'aseel-date-palm': 0.8, 'qarbala-date-palm': 0.8, 'date-products': 0.8, 'palm-supply-delivery': 0.7, 'palm-installation': 0.7, 'wholesale-export': 0.7, projects: 0.6, contact: 0.6, about: 0.5 };
+const LAST_MOD = new Date(BUILD_ID).toISOString().slice(0, 10);
+const sitemapUrls = [
+  { loc: `${SITE_URL}/`, changefreq: 'weekly', priority: '1.0' },
+  ...pages.map((page) => ({
+    loc: `${SITE_URL}/${page.slug}.html`,
+    changefreq: PRIORITY[page.slug] >= 0.8 ? 'weekly' : 'monthly',
+    priority: (PRIORITY[page.slug] ?? 0.6).toFixed(1),
+  })),
+];
+const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapUrls
+  .map((entry) => `  <url><loc>${entry.loc}</loc><lastmod>${LAST_MOD}</lastmod><changefreq>${entry.changefreq}</changefreq><priority>${entry.priority}</priority></url>`)
+  .join('\n')}\n</urlset>\n`;
+writeFileSync(join(OUT_DIR, 'sitemap.xml'), sitemapXml, 'utf8');
 
 console.log(`Built ${pages.length} content pages into ${OUT_DIR}/`);
