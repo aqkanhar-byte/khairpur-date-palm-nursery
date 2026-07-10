@@ -2,7 +2,7 @@ import { existsSync, mkdirSync, rmSync, writeFileSync, readFileSync, cpSync } fr
 import { join } from 'node:path';
 import { business, pages } from './site-data.mjs';
 
-const SITE_URL = 'https://khairpurdatepalms.com';
+const SITE_URL = 'https://www.khairpurdatepalms.com';
 const OUT_DIR = 'dist';
 const BUILD_ID = Date.now();
 
