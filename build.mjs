@@ -173,7 +173,7 @@ function pageTemplate(page) {
   <script type="application/ld+json">${schema(page)}</script>
   <script type="application/ld+json">${breadcrumbSchema(page)}</script>
 </head><body class="inner-page"><a class="skip-link" href="#main">Skip to content</a>
-<div class="topbar"><span>Nursery-grown in Khairpur, Sindh</span><a href="tel:+${business.phoneIntl}">Call: ${business.phone}</a></div>
+<div class="topbar"><span>Nursery-grown in Khairpur, Sindh</span><div class="topbar-right"><a href="tel:+${business.phoneIntl}">Call: ${business.phone}</a><a class="topbar-admin" href="admin.html" aria-label="Business admin login">Admin</a></div></div>
 <header class="site-header"><a class="brand" href="index.html"><img class="brand-logo" src="assets/khairpur-logo.jpg" alt="" width="52" height="52"><span><strong>Khairpur</strong><small>Date Palm & Nursery</small></span></a><button class="menu-toggle" aria-expanded="false" aria-controls="nav"><span></span><span></span><span></span><b class="sr-only">Menu</b></button><nav id="nav" aria-label="Main navigation">${navigation(page)}</nav><a class="button button-small header-cta" href="contact.html">Request a quote <span>↗</span></a></header>
 <main id="main">
   <section class="subhero"><div class="container subhero-grid"><div class="subhero-copy"><nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><span aria-current="page">${esc(page.title)}</span></nav><p class="eyebrow light"><span></span>${esc(page.eyebrow)}</p><h1>${esc(page.title)}</h1><p>${esc(page.intro)}</p><a class="button button-gold" href="${whatsapp}" target="_blank" rel="noopener">${esc(page.cta)} <span>→</span></a></div>${heroMedia}</div></section>
