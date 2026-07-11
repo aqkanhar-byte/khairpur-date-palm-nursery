@@ -206,8 +206,15 @@
     words(q).forEach((w) => { if (ENGLISH_MARKERS.has(w)) en++; if (URDU_MARKERS.has(w)) ur++; });
     return en > ur ? 'en' : 'ur';
   };
+  const HEIGHT_ANSWER = {
+    ur: 'Aseel approximately 1–20 ft aur Qarbala 1–10 ft tak available hain. Aap jo height chahiye us ke liye current stock aur price WhatsApp par confirm karein — har size har waqt available nahi hota.',
+    en: 'Aseel is available at approximately 1–20 ft and Qarbala at 1–10 ft. For the exact height you want, confirm current stock and price on WhatsApp — not every size is in stock at all times.'
+  };
   const answer = (question) => {
     const q = norm(question), qt = new Set(words(q)); let best, top = 0;
+    // Direct height query, e.g. "10ft", "6 feet", "12 foot", "8 fit" — customers often
+    // just type a number + unit. Map straight to the height/availability answer.
+    if (/\b\d{1,2}\s?(ft|fit|feet|foot|foota?n?)\b/.test(q) || /^\d{1,2}$/.test(q)) return HEIGHT_ANSWER;
     K.forEach(([topics, ur, en]) => topics.forEach((topic) => {
       const p = norm(topic);
       let score = q.includes(p) ? 8 + words(p).length : 0;
@@ -228,8 +235,8 @@
     const reply=answer(q);
     if(reply){bot.textContent=reply[lang]||reply.ur}
     else{
-      const fallback=lang==='en'?'No verified offline answer found for that.':'Verified offline jawab nahi mila.';
-      const cta=lang==='en'?'Ask on WhatsApp →':'WhatsApp par poochain →';
+      const fallback=lang==='en'?'I don’t have a direct answer to that here — the team will help you quickly on WhatsApp.':'Is sawal ka seedha jawab yahan mere paas nahi — team WhatsApp par foran madad kar degi.';
+      const cta=lang==='en'?'Ask on WhatsApp →':'WhatsApp par poochein →';
       bot.innerHTML=`${fallback} <a target="_blank" rel="noopener" href="https://wa.me/${PHONE}?text=${encodeURIComponent('Assalam-o-Alaikum, mera sawal hai: '+q)}">${cta}</a>`;
     }
     messages.append(bot);messages.scrollTop=messages.scrollHeight;
