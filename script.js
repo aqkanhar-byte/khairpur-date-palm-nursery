@@ -130,7 +130,12 @@ if (heroImage && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
       const { build } = await res.json();
       const stored = sessionStorage.getItem(KEY);
       if (stored === null) { sessionStorage.setItem(KEY, build); return; }
-      if (String(stored) !== String(build)) location.reload();
+      if (String(stored) !== String(build)) {
+        // Record the new build FIRST, so after the reload we don't detect a
+        // mismatch again and reload forever. This reloads exactly once per deploy.
+        sessionStorage.setItem(KEY, build);
+        location.reload();
+      }
     } catch { /* offline or blocked — ignore, cached copy still works */ }
   };
   checkVersion();
