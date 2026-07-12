@@ -18,7 +18,7 @@
   async function fetchLocal(category,limit){const all=(await api.all()).filter((item)=>item.published&&(!category||item.category===category)).sort((a,b)=>b.createdAt.localeCompare(a.createdAt)).slice(0,limit);return all.map((item)=>{const src=URL.createObjectURL(item.blobData?new Blob([item.blobData],{type:item.mime}):item.blob);urls.push(src);return{...item,src}})}
   function markup(items){return items.map((item)=>`<figure class="public-media-item">${item.type==='video'?`<video src="${item.src}" controls playsinline preload="metadata" aria-label="${esc(item.title)}"></video><span class="media-play" aria-hidden="true">▶</span>`:`<img src="${item.src}" alt="${esc(item.title)}" loading="lazy">`}<figcaption><span>${esc(item.category)}</span><strong>${esc(item.title)}</strong></figcaption></figure>`).join('')}
   async function renderGrid(grid){
-    const category=grid.dataset.publicGallery||null,limit=Number(grid.dataset.galleryLimit)||9;
+    const category=grid.dataset.publicGallery||null,limit=Number(grid.dataset.galleryLimit)||30;
     try{
       const cloud=await fetchCloud(category,limit);
       const local=cloud.length?[]:await fetchLocal(category,limit);
