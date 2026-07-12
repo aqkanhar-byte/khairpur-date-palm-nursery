@@ -12,7 +12,7 @@
   const dateLabel=(value)=>value?new Intl.DateTimeFormat('en-PK',{day:'2-digit',month:'short',year:'numeric'}).format(new Date(`${value}T12:00:00`)):'Not set';
   function load(){try{const parsed=JSON.parse(localStorage.getItem(STORAGE_KEY));if(!parsed||!Array.isArray(parsed.orders)||!Array.isArray(parsed.workers)||!Array.isArray(parsed.logs))return emptyData();if(!Array.isArray(parsed.quotations))parsed.quotations=[];return parsed}catch{return emptyData()}}
   function save(){data.updatedAt=new Date().toISOString();localStorage.setItem(STORAGE_KEY,JSON.stringify(data));renderAll()}
-  function log(action,detail){const item={id:uid(),action,detail,at:new Date().toISOString()};data.logs.unshift(item);data.logs=data.logs.slice(0,500);if(cloudReady)window.KhairpurCloud.addLog(item).catch(()=>{})}
+  function log(action,detail){const item={id:uid(),action,detail,at:new Date().toISOString()};data.logs.unshift(item);data.logs=data.logs.slice(0,500);if(cloudReady)Promise.resolve(window.KhairpurCloud.addLog(item)).catch(()=>{})}
   const cloudCall=async(promise,label)=>{try{const result=await promise;if(result?.error)throw result.error;return result}catch(error){alert(`${label} cloud sync failed. Local copy is saved. ${error.message||''}`);return null}};
   const toHex=(bytes)=>[...bytes].map((byte)=>byte.toString(16).padStart(2,'0')).join('');
   const fromHex=(value)=>new Uint8Array(value.match(/.{1,2}/g).map((byte)=>parseInt(byte,16)));
