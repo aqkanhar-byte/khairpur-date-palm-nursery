@@ -43,8 +43,6 @@ copyIfExists('admin-cloud.css');
 copyIfExists('supabase-config.js');
 copyIfExists('supabase-service.js');
 copyIfExists('media-gallery.js');
-copyIfExists('seasonal-widget.css');
-copyIfExists('seasonal-widget.js');
 copyIfExists('sw.js');
 copyIfExists('site.webmanifest');
 copyIfExists('robots.txt');
@@ -174,7 +172,7 @@ function pageTemplate(page) {
   <title>${esc(page.title)} | ${business.name}</title>
   <link rel="canonical" href="${SITE_URL}/${page.slug}.html">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="manifest" href="site.webmanifest"><link rel="apple-touch-icon" href="assets/app-icon-192.png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="refined.css"><link rel="stylesheet" href="seasonal-widget.css">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="refined.css">
   <script type="application/ld+json">${schema(page)}</script>
   <script type="application/ld+json">${breadcrumbSchema(page)}</script>
 </head><body class="inner-page"><a class="skip-link" href="#main">Skip to content</a>
@@ -187,7 +185,7 @@ function pageTemplate(page) {
   <section class="inner-cta"><div class="container"><div><p class="eyebrow light"><span></span>Direct, structured enquiry</p><h2>Send the right details.<br><em>Get a more useful answer.</em></h2></div><a class="button button-gold" href="${whatsapp}" target="_blank" rel="noopener">Continue on WhatsApp <span>→</span></a></div></section>
 </main>
 <footer><div class="container footer-grid"><div><a class="brand footer-brand" href="index.html"><span class="brand-mark">K</span><span><strong>Khairpur</strong><small>Date Palm & Nursery</small></span></a><p>Authentic date palms, date products and evidence-backed service information.</p></div><div><h3>Products</h3><a href="date-palms.html">Date palms</a><a href="date-products.html">Date products</a><a href="wholesale-export.html">Wholesale</a></div><div><h3>Services</h3><a href="palm-supply-delivery.html">Supply & delivery</a><a href="palm-installation.html">Installation</a><a href="projects.html">Projects</a></div><div><h3>Contact</h3><a href="tel:+${business.phoneIntl}">${business.phone}</a><a href="mailto:${business.email}">${business.email}</a><span>${business.location}</span></div></div><div class="container footer-bottom"><span>© ${new Date().getFullYear()} ${business.name}</span><span>Rooted in Khairpur. Growing across Pakistan.</span></div></footer>
-<a class="floating-wa" href="${whatsapp}" target="_blank" rel="noopener" aria-label="Start WhatsApp enquiry">◉ <span>WhatsApp enquiry</span></a><nav class="mobile-conversion" aria-label="Quick contact"><a href="tel:+${business.phoneIntl}"><span>Call us</span><strong>${business.phone}</strong></a><a href="${whatsapp}" target="_blank" rel="noopener"><span>WhatsApp</span><strong>Start enquiry</strong></a></nav><script src="script.js"></script>${page.mediaCategory ? '<script src="supabase-config.js"></script><script src="media-gallery.js"></script>' : ''}<script src="assistant.js"></script><script src="seasonal-widget.js" defer></script></body></html>`;
+<a class="floating-wa" href="${whatsapp}" target="_blank" rel="noopener" aria-label="Start WhatsApp enquiry">◉ <span>WhatsApp enquiry</span></a><nav class="mobile-conversion" aria-label="Quick contact"><a href="tel:+${business.phoneIntl}"><span>Call us</span><strong>${business.phone}</strong></a><a href="${whatsapp}" target="_blank" rel="noopener"><span>WhatsApp</span><strong>Start enquiry</strong></a></nav><script src="script.js"></script>${page.mediaCategory ? '<script src="supabase-config.js"></script><script src="media-gallery.js"></script>' : ''}<script src="assistant.js"></script></body></html>`;
 }
 
 for (const page of pages) {
