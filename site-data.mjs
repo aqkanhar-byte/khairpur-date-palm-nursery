@@ -125,6 +125,20 @@ export const pages = [
     ],
   },
   {
+    slug: 'aseel-dates-buying-guide', eyebrow: 'From our nursery, for your table', title: 'A buyer’s guide to Aseel dates: Khalal, Chuhara and everything between.',
+    description: 'A practical buying guide to Aseel dates from Khairpur — the fresh Khalal season, dried Chuhara, how to judge real quality, and how to store them.',
+    intro: 'Every year, the Khairpur date season brings a short window when Aseel dates are sold fresh, followed by a much longer period when the same fruit is available dried. Most buyers only ever see one stage or the other, which makes it hard to compare quality or know what a fair product actually looks like. This guide covers both formats in plain terms — what to look for, what changes between fresh and dried, and how to store what you buy so it lasts as long as it should.',
+    cta: 'Order Aseel dates', purpose: 'Aseel dates order', image: 'assets/khalal-aseel-dates.webp', imageAlt: 'Fresh Khalal Aseel dates in a traditional Khairpur basket',
+    facts: [['Region', 'Khairpur, Sindh'], ['Fresh stage', 'Khalal — a short summer window'], ['Dried stage', 'Chuhara — stores year-round'], ['Buying options', 'Retail and bulk']],
+    sections: [
+      ['What makes a date "Aseel"', 'Aseel is a named date variety with a long growing history around Khairpur, and it is the fruit most closely associated with the region. It is not a marketing label applied to any yellow date — it refers to a specific palm variety, grown and harvested locally, with its own taste and texture. When a seller cannot say which variety they are offering, it usually means the fruit has been mixed from more than one source.', ['A named, traceable variety', 'Grown around Khairpur, Sindh', 'Distinct from generic mixed-source dates']],
+      ['Khalal vs. Chuhara: two products from the same fruit', 'Khalal is the fresh stage — the date has reached full size and colour but has not been dried. It is soft, two-toned between yellow and brown, and only available for a few weeks each year during harvest. Chuhara is the same fruit after it has been properly sun-dried, which concentrates the sugars, changes the texture to firm and chewy, and extends shelf life from days to many months. Neither is "better" — they suit different uses and different times of year.', ['Khalal: fresh, seasonal, short shelf life', 'Chuhara: dried, available year-round', 'Same fruit, different stage of processing']],
+      ['How to judge quality before you buy', 'For Khalal, look for firm skin with no broken or weeping patches, a natural two-tone colour rather than fruit that looks uniformly brown or artificially glossy, and a clean smell with no sourness. For Chuhara, the dates should feel dry to the touch but not brittle or dusty, and should not be sticky with added syrup, which some sellers use to disguise lower-grade stock. Uniform size within a batch is a reasonable sign of proper sorting.', ['Skin condition and colour balance', 'No added syrup or artificial gloss', 'Clean smell, consistent sizing']],
+      ['Storage: getting the shelf life you expect', 'Fresh Khalal has the shortest window of any format here — it is best eaten within a few days and should be refrigerated if not consumed immediately, since it has no drying step to slow spoilage. Chuhara is far more forgiving: kept in a sealed container away from direct heat and moisture, it comfortably lasts many months, which is exactly why it has traditionally been the household staple for year-round use while Khalal remains a seasonal treat.', ['Khalal: refrigerate, consume within days', 'Chuhara: sealed, dry storage, long shelf life', 'Avoid direct heat and moisture for either']],
+    ],
+  },
+
+  {
     slug: 'about', eyebrow: 'Rooted in Khairpur', title: 'Local knowledge. Direct responsibility.',
     description: 'Learn what is publicly verified about Khairpur Date Palm & Nursery and the standards guiding its website content.',
     intro: 'Khairpur Date Palm & Nursery operates from Khairpur Mirs and publicly positions itself around palm supply, installation and date-related products.',

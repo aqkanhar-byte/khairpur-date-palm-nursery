@@ -43,6 +43,7 @@ copyIfExists('admin-cloud.css');
 copyIfExists('supabase-config.js');
 copyIfExists('supabase-service.js');
 copyIfExists('media-gallery.js');
+copyIfExists('public-reviews.js');
 copyIfExists('sw.js');
 copyIfExists('site.webmanifest');
 copyIfExists('robots.txt');
@@ -75,7 +76,7 @@ function navigation(page) {
   const current = (key) =>
     (groups[key] || [key]).includes(page.slug) ? ' aria-current="page"' : '';
 
-  return `<a href="index.html">Home</a><a href="date-palms.html"${current('palms')}>Date Palms</a><a href="date-products.html"${current('products')}>Date Products</a><a href="palm-installation.html"${current('services')}>Services</a><a href="projects.html"${current('projects')}>Projects</a><a href="index.html#gallery">Pictures & Videos</a><a href="about.html"${current('about')}>About</a>`;
+  return `<a href="index.html">Home</a><a href="date-palms.html"${current('palms')}>Date Palms</a><a href="date-products.html"${current('products')}>Date Products</a><a href="palm-installation.html"${current('services')}>Services</a><a href="projects.html"${current('projects')}>Projects</a><a href="aseel-dates-buying-guide.html"${current('aseel-dates-buying-guide')}>Buying Guide</a><a href="index.html#gallery">Pictures & Videos</a><a href="about.html"${current('about')}>About</a>`;
 }
 
 function schema(page) {
@@ -215,7 +216,7 @@ for (const page of pages) {
   writeFileSync(join(OUT_DIR, `${page.slug}.html`), versionAssets(pageTemplate(page)), 'utf8');
 }
 
-const PRIORITY = { 'date-palms': 0.9, 'aseel-date-palm': 0.8, 'qarbala-date-palm': 0.8, 'date-products': 0.8, 'palm-supply-delivery': 0.7, 'palm-installation': 0.7, 'wholesale-export': 0.7, projects: 0.6, contact: 0.6, about: 0.5 };
+const PRIORITY = { 'date-palms': 0.9, 'aseel-date-palm': 0.8, 'qarbala-date-palm': 0.8, 'date-products': 0.8, 'palm-supply-delivery': 0.7, 'palm-installation': 0.7, 'wholesale-export': 0.7, 'aseel-dates-buying-guide': 0.7, projects: 0.6, contact: 0.6, about: 0.5 };
 const LAST_MOD = new Date(BUILD_ID).toISOString().slice(0, 10);
 const sitemapUrls = [
   { loc: `${SITE_URL}/`, changefreq: 'weekly', priority: '1.0' },
