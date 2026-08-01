@@ -1,6 +1,7 @@
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 
-const files = readdirSync('.').filter((file) => file.endsWith('.html'));
+const DIST = 'dist';
+const files = readdirSync(DIST).filter((file) => file.endsWith('.html')).map((file) => `${DIST}/${file}`);
 const errors = [];
 const warnings = [];
 const titles = new Map();
@@ -30,7 +31,7 @@ for (const file of files) {
     const ref = match[1];
     if (/^(?:https?:|tel:|mailto:|#)/.test(ref)) continue;
     const path = ref.split('#')[0].split('?')[0];
-    if (path && !existsSync(path)) errors.push(`${file}: missing local reference ${path}`);
+    if (path && !existsSync(`${DIST}/${path}`)) errors.push(`${file}: missing local reference ${path}`);
   }
 
   for (const match of html.matchAll(/<img\s[^>]*>/g)) {
@@ -52,7 +53,7 @@ for (const file of files) {
   const html = readFileSync(file, 'utf8');
   for (const match of html.matchAll(/(?:src|href)="(assets\/[^"?#]+)"/g)) usedAssets.add(match[1]);
 }
-const usedBytes = [...usedAssets].reduce((total, asset) => total + (existsSync(asset) ? statSync(asset).size : 0), 0);
+const usedBytes = [...usedAssets].reduce((total, asset) => total + (existsSync(`${DIST}/${asset}`) ? statSync(`${DIST}/${asset}`).size : 0), 0);
 
 console.log(JSON.stringify({ pages: files.length, uniqueTitles: titles.size, uniqueDescriptions: descriptions.size, usedAssets: usedAssets.size, usedAssetKB: Math.round(usedBytes / 1024), errors, warnings }, null, 2));
 if (errors.length) process.exit(1);
