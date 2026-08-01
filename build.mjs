@@ -92,12 +92,34 @@ function schema(page) {
       '@type': 'LocalBusiness',
       name: business.name,
       url: `${SITE_URL}/`,
+      image: `${SITE_URL}/assets/khairpur-date-palm-hero.webp`,
       telephone: `+${business.phoneIntl}`,
       email: business.email,
+      priceRange: 'PKR',
       address: { '@type': 'PostalAddress', addressLocality: 'Khairpur Mirs', addressRegion: 'Sindh', addressCountry: 'PK' },
+      geo: { '@type': 'GeoCoordinates', latitude: 27.52948, longitude: 68.75915 },
       areaServed: 'Pakistan',
+      sameAs: [business.facebook],
     },
   }).replaceAll('<', '\\u003c');
+}
+
+function productSchema(page) {
+  if (page.slug !== 'date-products') return '';
+  const names = ['Fresh Aseel Dates', 'Dry Dates / Chuhara', 'Date Paste, Syrup and Powder'];
+  return page.sections
+    .filter(([title]) => names.includes(title))
+    .map(([title, copy]) =>
+      `<script type="application/ld+json">${JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Product',
+        name: title,
+        description: copy,
+        image: `${SITE_URL}/${page.image}`,
+        brand: { '@type': 'Brand', name: business.name },
+      }).replaceAll('<', '\\u003c')}</script>`
+    )
+    .join('');
 }
 
 function breadcrumbSchema(page) {
@@ -175,6 +197,7 @@ function pageTemplate(page) {
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="refined.css">
   <script type="application/ld+json">${schema(page)}</script>
   <script type="application/ld+json">${breadcrumbSchema(page)}</script>
+  ${productSchema(page)}
 </head><body class="inner-page"><a class="skip-link" href="#main">Skip to content</a>
 <div class="topbar"><span>Nursery-grown in Khairpur, Sindh</span><div class="topbar-right"><a href="tel:+${business.phoneIntl}">Call: ${business.phone}</a><a class="topbar-admin" href="admin.html" aria-label="Business admin login">Admin</a></div></div>
 <header class="site-header"><a class="brand" href="index.html"><img class="brand-logo" src="assets/khairpur-logo.jpg" alt="" width="52" height="52"><span><strong>Khairpur</strong><small>Date Palm & Nursery</small></span></a><button class="menu-toggle" aria-expanded="false" aria-controls="nav"><span></span><span></span><span></span><b class="sr-only">Menu</b></button><nav id="nav" aria-label="Main navigation">${navigation(page)}</nav><a class="button button-small header-cta" href="contact.html">Request a quote <span>↗</span></a></header>
